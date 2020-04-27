@@ -27,7 +27,21 @@ def call(Map config) {
 def test() {
     echo "this is test function"
 }
-
+def executeQualityCheck(List helm_cmd_info, List values_info) {
+    def helm_chart
+    helm_cmd_info.eachWithIndex { helm, h ->
+        if (helm["chart"]) {
+            helm_chart = helm["chart"]
+            stage("Quality-check"){
+                echo "Helm chart name from helm cmd yaml - ${helm_chart}"
+                echo "Deploy Helm Chart to GKE Cluster"
+            }
+        }
+        else{
+            echo "NO DEPLOY"
+        }
+    }
+}
 def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info, values_info) {
     def flag
     publish_info.eachWithIndex { pub, i ->
@@ -50,21 +64,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
         }
     }
 }
-def executeQualityCheck(List helm_cmd_info, List values_info) {
-    def helm_chart
-    helm_cmd_info.eachWithIndex { helm, h ->
-        if (helm["chart"]) {
-            helm_chart = helm["chart"]
-            stage("Quality-check"){
-                echo "Helm chart name from helm cmd yaml - ${helm_chart}"
-                echo "Deploy Helm Chart to GKE Cluster"
-            }
-        }
-        else{
-            echo "NO DEPLOY"
-        }
-    }
-}
+
 /*
 def qualityCheck(List helm_cmd_info, List values_info) {
         helm_cmd_info.eachWithIndex { helm, i ->
