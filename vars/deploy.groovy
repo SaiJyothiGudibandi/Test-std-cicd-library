@@ -35,8 +35,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                     if(dep["name"] == "deploy"){
                         stage("Deploy-To-GKE") {
                             echo "Code Build Stage ${helm_cmd_info}"
-                            helm_cmd_info.eachWithIndex { List helm, h ->
-                                echo
+                            helm_cmd_info.eachWithIndex { List helm, Integer h ->
                                 if(helm["chart"].startsWith("feature")){
                                     echo "inside chart-feature"
                                     echo "Helm chart name - ${helm['chart']}"
