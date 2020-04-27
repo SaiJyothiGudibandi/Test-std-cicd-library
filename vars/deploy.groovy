@@ -26,7 +26,7 @@ def call(Map config) {
     }
 }
 
-def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info, values_info) {
+def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info, values_info, branch_name) {
     def flag
     publish_info.eachWithIndex { pub, i ->
         if (pub["name"] == "publish") {
