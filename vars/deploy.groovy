@@ -19,7 +19,7 @@ def call(Map config) {
             helm_cmd_info = readYaml file: yaml_helm_cmd
             values_info = readYaml file: yaml_values_file
             //qualityCheck(helm_cmd_info, values_info, publish_info, deploy_info)
-            executePublishArtifactory(publish_info, deploy_info, helm_cmd_info, values_info)
+            executePublishArtifactory(publish_info, deploy_info, helm_cmd_info, values_info, branch_name)
 
             //executeDeploy(deploy_info)
         }
@@ -42,13 +42,15 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                                     echo "Values.yaml - image - repo : ${val["image"]["repository"]}"
                                     def values_img_repo = val["image"]["repository"]
                                     def values_img = values_img_repo.substring(values_img_repo.lastIndexOf("/") + 1)
-                                    echo "1st ${values_img}"
-                                    values_img = values_img.substring(0, values_img.indexOf('-'))
                                     println values_img
-                                    if(helm["chart"].startsWith("feature") || values_img.startsWith("feature"))
-                                    {
-                                        echo "inside chart-feature"
-                                        echo "Deploy Helm Chart to GKE Cluster"
+                                    if(helm["chart"].startsWith("feature") || values_img.startsWith("feature")) {
+                                        if(branch_name.startsWith("feature")) {
+                                            echo "inside chart-feature"
+                                            echo "Deploy Helm Chart to Lower env GKE Cluster"
+                                        }
+                                        else{
+                                            echo "Deploy Helm Chart to GKE Cluster"
+                                        }
                                     }
                                 }
                                 }
