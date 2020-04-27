@@ -30,11 +30,9 @@ def test(List helm_cmd_info, List values_info) {
     helm_cmd_info.eachWithIndex { helm, h ->
         if (helm["chart"]) {
             helm_chart = helm["chart"]
-            stage("Quality-check"){
                 echo "Helm chart name from helm cmd yaml - ${helm_chart}"
                 echo "Deploy Helm Chart to GKE Cluster"
             }
-        }
         else{
             echo "NO DEPLOY"
         }
