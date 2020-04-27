@@ -53,6 +53,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                     if(dep["name"] == "deploy"){
                         stage("Deploy-To-GKE") {
                             test()
+                            echo "Code Build Stage ${helm_cmd_info}"
                             echo "Deploy Helm Chart to GKE Cluster"
 
                         }
