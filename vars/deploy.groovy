@@ -40,7 +40,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                                 if(helm["chart"] && val["image"]) {
                                     echo "inside chart-feature"
                                     echo "Helm chart name - ${helm['chart']}"
-                                    echo "Values.yaml - image - repo : ${val["image"]}"
+                                    echo "Values.yaml - image - repo : ${val["image"]["repository"]}"
                                     echo "Deploy Helm Chart to GKE Cluster"
                                 }
                                 }
