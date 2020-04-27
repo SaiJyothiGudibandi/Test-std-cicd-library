@@ -34,12 +34,14 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                 deploy_info.eachWithIndex { dep, j ->
                     if(dep["name"] == "deploy"){
                         stage("Deploy-To-GKE") {
-                            echo "Code Build Stage ${helm_cmd_info}"
                             helm_cmd_info.eachWithIndex { List helm, Integer h ->
-                                if(helm["name"]){
+                                values_info.eachWithIndex { List val, Integer v ->
+                                if(helm["chart"] && val[image].containsKey("repository")) {
                                     echo "inside chart-feature"
                                     echo "Helm chart name - ${helm['chart']}"
+                                    echo "Values.yaml - image - repo : ${val["image"]["repository"]}"
                                     echo "Deploy Helm Chart to GKE Cluster"
+                                }
                                 }
                             }
                         }
