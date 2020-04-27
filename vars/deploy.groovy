@@ -26,17 +26,7 @@ def call(Map config) {
 }
 def test(List helm_cmd_info, List values_info) {
     echo "this is test function"
-    def helm_chart
-    helm_cmd_info.eachWithIndex { helm, h ->
-        if (helm["chart"]) {
-            helm_chart = helm["chart"]
-                echo "Helm chart name from helm cmd yaml - ${helm_chart}"
-                echo "Deploy Helm Chart to GKE Cluster"
-            }
-        else{
-            echo "NO DEPLOY"
-        }
-    }
+    echo("helm info - ${helm_cmd_info}")
 }
 def executeQualityCheck() {
     def helm_chart
