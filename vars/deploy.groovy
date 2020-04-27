@@ -24,8 +24,21 @@ def call(Map config) {
         }
     }
 }
-def test() {
+def test(List helm_cmd_info, List values_info) {
     echo "this is test function"
+    def helm_chart
+    helm_cmd_info.eachWithIndex { helm, h ->
+        if (helm["chart"]) {
+            helm_chart = helm["chart"]
+            stage("Quality-check"){
+                echo "Helm chart name from helm cmd yaml - ${helm_chart}"
+                echo "Deploy Helm Chart to GKE Cluster"
+            }
+        }
+        else{
+            echo "NO DEPLOY"
+        }
+    }
 }
 def executeQualityCheck() {
     def helm_chart
@@ -52,7 +65,6 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                     if(dep["name"] == "deploy"){
                         stage("Deploy-To-GKE") {
                             test()
-                            executeQualityCheck(helm_cmd_info, values_info)
                             echo "Deploy Helm Chart to GKE Cluster"
 
                         }
