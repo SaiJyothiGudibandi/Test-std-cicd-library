@@ -36,7 +36,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                         stage("Deploy-To-GKE") {
                             echo "Code Build Stage ${helm_cmd_info}"
                             helm_cmd_info.eachWithIndex { List helm, h ->
-                                if(helm["chart"]){
+                                if(helm["name"] == "Helm-Command"){
                                     echo "Helm chart name - ${helm["chart"]}"
                                     echo "Deploy Helm Chart to GKE Cluster"
                                 }
