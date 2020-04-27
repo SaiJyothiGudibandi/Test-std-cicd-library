@@ -50,11 +50,10 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                                         }
                                         else{
                                             error: echo "Helm chart name / image repo has feature artifacts. So cant deploy"
-                                            //exit 0
                                         }
                                     }
                                     else{
-                                        echo ""
+                                        echo "Deploy Helm Chart to GKE Cluster"
                                     }
                                 }
                                 }
