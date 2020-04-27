@@ -36,7 +36,7 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                         stage("Deploy-To-GKE") {
                             helm_cmd_info.eachWithIndex { List helm, Integer h ->
                                 values_info.eachWithIndex { List val, Integer v ->
-                                if(helm["chart"] && val[image].containsKey("repository")) {
+                                if(helm["chart"] && val["image"].containsKey("repository")) {
                                     echo "inside chart-feature"
                                     echo "Helm chart name - ${helm['chart']}"
                                     echo "Values.yaml - image - repo : ${val["image"]["repository"]}"
