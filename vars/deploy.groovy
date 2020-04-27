@@ -20,6 +20,7 @@ def call(Map config) {
             values_info = readYaml file: yaml_values_file
             //qualityCheck(helm_cmd_info, values_info, publish_info, deploy_info)
             executePublishArtifactory(publish_info, deploy_info, helm_cmd_info, values_info)
+
             //executeDeploy(deploy_info)
         }
     }
