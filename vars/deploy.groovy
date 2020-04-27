@@ -27,7 +27,7 @@ def call(Map config) {
 def test() {
     echo "this is test function"
 }
-def executeQualityCheck(List helm_cmd_info, List values_info) {
+def executeQualityCheck() {
     def helm_chart
     helm_cmd_info.eachWithIndex { helm, h ->
         if (helm["chart"]) {
@@ -52,8 +52,9 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                     if(dep["name"] == "deploy"){
                         stage("Deploy-To-GKE") {
                             test()
-                            echo "Deploy Helm Chart to GKE Cluster"
                             executeQualityCheck(helm_cmd_info, values_info)
+                            echo "Deploy Helm Chart to GKE Cluster"
+
                         }
                     }
                 }
