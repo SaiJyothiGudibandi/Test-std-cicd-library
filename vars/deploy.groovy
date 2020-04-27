@@ -38,10 +38,17 @@ def executePublishArtifactory(List publish_info, List deploy_info, helm_cmd_info
                             helm_cmd_info.eachWithIndex { List helm, Integer h ->
                                 values_info.eachWithIndex { List val, Integer v ->
                                 if(helm["chart"] && val["image"]) {
-                                    echo "inside chart-feature"
                                     echo "Helm chart name - ${helm['chart']}"
                                     echo "Values.yaml - image - repo : ${val["image"]["repository"]}"
-                                    echo "Deploy Helm Chart to GKE Cluster"
+                                    def values_img_repo = val["image"]["repository"]
+                                    def values_img = values_img_repo.substring(values_img_repo.lastIndexOf("/") + 1)
+                                    values_img = values_img.substring(0, values_img.indexOf('-'))
+                                    println values_img
+                                    if(helm["chart"].startsWith("feature") || values_img.startsWith("feature"))
+                                    {
+                                        echo "inside chart-feature"
+                                        echo "Deploy Helm Chart to GKE Cluster"
+                                    }
                                 }
                                 }
                             }
