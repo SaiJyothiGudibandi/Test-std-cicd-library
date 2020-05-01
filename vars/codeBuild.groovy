@@ -1,21 +1,16 @@
-def call(body) {
-    def config = [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
-    def yaml_file = config.yamlBuild
-    def code_info = []
+def call(Map config) {
+    def code_build_info_file = config.code_build_config
+    def conf = config.conf
+    def code_build_info = []
     node {
-        echo("YAML FILE ${yaml_file}")
-        if (yaml_file == ""){
-            echo("Didn't find ${yaml_file}")
-            exit 0
-        } else {
-            code_info = readYaml file: yaml_file
-            stage("Code-Build") {
-                echo "Code Build Stage ${code_info}"
-                //echo running command from info yaml
+        ansiColor("xterm"){
+            echo("YAML FILE ${code_build_info_file}")
+            if (code_build_info_file == ""){
+                code_scan_info = readYaml file: "resources/code-build-info.yaml"
+            } else {
+                code_build_info = readYaml file: code_build_info_file
             }
+            utils.executeCodeBuildConfig(code_build_info, conf, this)
         }
     }
 }

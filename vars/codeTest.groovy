@@ -1,20 +1,16 @@
-def call(body) {
-    def config = [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
-    def yaml_file = config.yamlTest
-    def code_info = []
+def call(Map config) {
+    def code_test_info_file = config.code_test_config
+    def conf = config.conf
+    def code_test_info = []
     node {
-        echo("YAML FILE ${yaml_file}")
-        if (yaml_file == ""){
-            echo("Didn't find ${yaml_file}")
-            exit 0
-        } else {
-            code_info = readYaml file: yaml_file
-            stage("Code-Test") {
-                echo "Code test stage"
+        ansiColor("xterm"){
+            echo("YAML FILE ${code_test_info_file}")
+            if (code_test_info_file == ""){
+                code_test_info = readYaml file: "resources/code-scan-info.yaml"
+            } else {
+                code_test_info = readYaml file: code_test_info_file
             }
+            utils.executeCodeTestConfig(code_test_info, conf, this)
         }
     }
 }
