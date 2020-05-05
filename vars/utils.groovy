@@ -26,23 +26,31 @@ def getGitTags(sha) {
     ).trim().split()
 }
 
+// def executeCodeBuildConfig(code_build_info, conf, script){
+//         code_build_info["code_build_steps"].eachWithIndex { it, i ->
+//             _validate(it)
+//             //Execute build commands
+//             _executeShellCommands(it["commands"])
+//         }
+// }
+
 def executeCodeBuildConfig(code_build_info, conf, script){
-    def app_platform
-    if(code_build_info["application-platform"] && code_build_info["code_build_steps"]) {
-        code_build_info["application-platform"].eachWithIndex { it, i ->
-            _validateCodePlatform(it)
-            app_platform = it["name"]
-        }
-        code_build_info["code_build_steps"].eachWithIndex { it, i ->
-            if (app_platform == it["name"]) {
-                _validate(it)
-                //Execute build commands
-                _executeShellCommands(it["commands"])
-            }
-        }
-    }
-    else
-        error("Application-Platform is empty in code-build-info.yaml")
+   def app_platform
+   if(code_build_info["application-platform"] && code_build_info["code_build_steps"]) {
+       code_build_info["application-platform"].eachWithIndex { it, i ->
+           _validateCodePlatform(it)
+           app_platform = it["name"]
+       }
+       code_build_info["code_build_steps"].eachWithIndex { it, i ->
+           if (app_platform == it["name"]) {
+               _validate(it)
+               //Execute build commands
+               _executeShellCommands(it["commands"])
+           }
+       }
+   }
+   else
+       error("Application-Platform is empty in code-build-info.yaml")
 }
 
 def executeCodeTestConfig(code_test_info, conf, script){
@@ -55,7 +63,7 @@ def executeCodeTestConfig(code_test_info, conf, script){
                 _executeShellCommands(its["commands"])
                 // Report junit tests.
                 if (its.containsKey("junit")) {
-                echo "execute junit on ${its["junit"]}"
+                    echo "execute junit on ${its["junit"]}"
                 }
             }
         }
