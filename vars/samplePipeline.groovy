@@ -30,7 +30,7 @@ def call(Map config) {
         built = true
     }
     //codeScan Stage
-    codeScan(["sonar.projectKey": "${config.env.JOB_NAME}", "sonar.sources": "${sonarsource}", "sonar.login": "admin", "sonar.password": "admin"])
+    codeScan(["sonar.projectKey": "${config.env.JOB_NAME}", "sonar.sources": "${sonarsource}", "sonar.login": "admin", "sonar.password": "admin", "sonar.host.url": "http://35.237.244.110:9000"])
 
     // codeTest Stage
     codeTest(config)
