@@ -18,7 +18,7 @@ def call(Map config) {
                 def scannerHome = tool 'sonnarscanner';
                 withSonarQubeEnv("sonarqube") {
                     def f = new File("${scannerHome}/conf/sonar-project.properties")
-                    f.write("sonar.host.url=http://35.237.244.110:9000\n")
+                    f.write("sonar.host.url=https://sonarqube-dev.broadcom.net\n")
                     sh "cat ${scannerHome}/conf/sonar-project.properties"
                     sh "telnet 35.237.244.110 9000"
                     sh "${scannerHome}/bin/sonar-scanner"
