@@ -16,7 +16,7 @@ def call(Map config) {
             echo("SonarQube Code Scan")
             stage("Code-Scan"){
                 def scannerHome = tool 'sonnarscanner';
-                withSonarQubeEnv("sonnarqube") {
+                withSonarQubeEnv("sonarqube") {
                     def f = new File("${scannerHome}/conf/sonar-project.properties")
                     f.write("sonar.host.url=http://35.237.244.110:9000\n")
                     sh "cat ${scannerHome}/conf/sonar-project.properties"
