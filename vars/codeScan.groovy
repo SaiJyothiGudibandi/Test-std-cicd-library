@@ -21,7 +21,7 @@ def call(Map config) {
                     // f.write("sonar.host.url=https://sonarqube-dev.broadcom.net\n")
                     // sh "cat ${scannerHome}/conf/sonar-project.properties"
                     // sh "${scannerHome}/bin/sonar-scanner"
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn clean verify sonar:sonar'
                 }
                 timeout(time: 3, unit: 'MINUTES') {
                     waitForQualityGate(abortPipeline: true)
